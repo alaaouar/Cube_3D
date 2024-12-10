@@ -15,6 +15,7 @@ typedef struct s_cube3D
     int width;
     int height;
     char **map;
+    char *name;
 }               t_cube3D;
 
 
