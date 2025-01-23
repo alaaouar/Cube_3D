@@ -6,7 +6,7 @@
 /*   By: rodrick <rodrick@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 20:10:37 by rodrick           #+#    #+#             */
-/*   Updated: 2025/01/22 16:28:42 by rodrick          ###   ########.fr       */
+/*   Updated: 2025/01/23 20:44:45 by rodrick          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,17 @@ void    print_map(t_cube3D *cube)
     printf("R= %d, G= %d, B= %d\n", cube->attribut->color->red, cube->attribut->color->green, cube->attribut->color->blue);
 }
 
+int ft_mlx_init(t_cube3D *cube)
+{
+    cube->mlx = malloc(sizeof(t_mlx));
+    cube->mlx->mlx = mlx_init();
+    if (!cube->mlx->mlx)
+        return (1);
+    cube->mlx->win = mlx_new_window(cube->mlx->mlx, 500, 500, "my cube 3D");
+    map_draw(cube);
+    mlx_loop(cube->mlx->mlx);
+}
+
 int main(int ac, char **av)
 {
     if (ac != 2)
@@ -156,6 +167,7 @@ int main(int ac, char **av)
         return (1);
     map_in_it(cube, av);
     print_map(cube);
+    ft_mlx_init(cube);
     // Free allocated memory here if necessary
     return (0);
 }

@@ -1,35 +1,23 @@
-NAME = Cube_3D
-CC = cc
-CFLAGS =  -g3 #-Wall -Wextra -Werror
-READLINE = -lreadline
+CC		= cc
+SRC		= get_next_line.c get_next_line_utils.c main.c utils.c map_draw.c
+NAME	= Cube_3D
+CFLAGS	= #-Wall -Wextra -Werror
+CLIBS	= -Lmlx_linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lm -lz
+OBJ		= $(SRC:.c=.o)
 
-FILES = $(shell find . -type f -name '*.c')
-
-OBJ = $(FILES:.c=.o)
-
-GREEN = \033[0;32m
-ORANGE = \033[0;33m
-RED = \033[0;31m
-NC = \033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) $(READLINE) -o $(NAME) >/dev/null
-	@echo "$(ORANGE)Linking $(NAME)...$(NC)"
-
-$(OBJ): %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -g -o $@ >/dev/null
-	@echo "$(GREEN)Compiling $<$(NC)"
+	$(CC) $(CFLAGS) $(OBJ) $(CLIBS) -o $(NAME) 
 
 clean:
-	@rm -rf $(OBJ)
-	@echo "$(RED)Cleaning objects...$(NC)"
+	rm -rf $(OBJ)
 
 fclean: clean
-	@rm -rf $(NAME)
-	@echo "$(RED)Cleaning $(NAME)...$(NC)"
+	rm -rf $(NAME)
 
 re: fclean all
 
+.SECONDARY: $(OBJ)
 .PHONY: all clean fclean re

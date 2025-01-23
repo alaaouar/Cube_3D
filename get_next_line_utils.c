@@ -6,7 +6,7 @@
 /*   By: rodrick <rodrick@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:17:15 by elel-yak          #+#    #+#             */
-/*   Updated: 2024/12/10 20:31:06 by rodrick          ###   ########.fr       */
+/*   Updated: 2025/01/23 20:45:50 by rodrick          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ size_t	ft_strlen(char *str)
 		count++;
 	return (count);
 }
-
+ 
 void	*ft_free(char *line)
 {
 	free (line);
