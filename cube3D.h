@@ -18,6 +18,9 @@ typedef struct s_color
     int red;
     int green;
     int blue;
+    int f_red;
+    int f_green;
+    int f_blue;
 }               t_color;
 
 

@@ -12,41 +12,42 @@
 
 #include "cube3D.h"
 
-int	ft_isdigit(int c)
+int color_assigned(char *str, int *i)
 {
-	return (c <= 57 && c >= 48);
-}
-int    color_assigned(char *str, int i)
-{
-    int color;
-    
-    color = 0;
-    while (str[i])
+    int color = 0;
+
+    while (str[*i] && str[*i] >= '0' && str[*i] <= '9')
     {
-        if (ft_isdigit(str[i]))
-            color = color * 10 + str[i] - '0';
-        else
-            break;
-        i++;
+        color = color * 10 + (str[*i] - '0');
+        (*i)++;
     }
-    return (color);
+    
+    return color;
 }
 
-int	colors(char *thec, t_cube3D *cube, char c)
+int colors(char *thec, t_cube3D *cube, char c)
 {
-    int i;
-    
-    i = 0;
+    int i = 0;
+
     if (thec[i] == c)
         i += 2;
-    cube->attribut->color->red = color_assigned(thec, i);
-    if (thec[i] == ',')
-        i++;
-    cube->attribut->color->green = color_assigned(thec, i);
-    if (thec[i] == ',')
-        i++;
-    cube->attribut->color->blue = color_assigned(thec, i);
-    return (1);
+    if (c == 'C')
+    {
+        cube->attribut->color->red = color_assigned(thec, &i);
+        if (thec[i] == ',') i++;
+        cube->attribut->color->green = color_assigned(thec, &i);
+        if (thec[i] == ',') i++;
+        cube->attribut->color->blue = color_assigned(thec, &i);
+    }
+    else if (c == 'F')
+    {
+        cube->attribut->color->f_red = color_assigned(thec, &i);
+        if (thec[i] == ',') i++;
+        cube->attribut->color->f_green = color_assigned(thec, &i);
+        if (thec[i] == ',') i++;
+        cube->attribut->color->f_blue = color_assigned(thec, &i);
+    }
+    return 0;
 }
 
 

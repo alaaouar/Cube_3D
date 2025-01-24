@@ -104,10 +104,46 @@ void    map_attributes(t_cube3D *cube)
     get_direction(cube);
 }
 
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+		write(fd, &s[i], 1);
+}
+void    map_cub(char *str)
+{
+    int i;
+    int j;
+    char *cub;
+
+    cub = ".cub";
+    i = 0;
+    while (str[i] != '\0')
+        i++;
+    j = 3;
+    if (i < 4)
+    {
+        ft_putstr_fd("map name not valid \n", 2);
+        exit(1);
+    }
+    while (j >= 0)
+    {
+        if (str[i - 1] != cub[j])
+        {
+            ft_putstr_fd("map name not valid \n", 2);
+            exit(1);
+        }
+        i--;
+        j--;
+    }
+}
 
 void map_in_it(t_cube3D *cube, char **av)
 {
     cube->name = av[1];
+    map_cub(av[1]);
     cube->attribut = (t_attribut *)malloc(sizeof(t_attribut));
     if (!cube->attribut)
         return;
@@ -118,33 +154,19 @@ void map_in_it(t_cube3D *cube, char **av)
     fill_the_map(cube);
     map_attributes(cube);
     colors(cube->attribut->c, cube, 'C');
+    colors(cube->attribut->f, cube, 'F');
 }
-
-void    print_map(t_cube3D *cube)
+void	handle_exit(int keycode, t_cube3D *cube)
 {
-    int i = 0;
-
-    while (cube->map[i])
-    {
-        printf("%s", cube->map[i]);
-        i++;
-    }
-    printf("\n----------------------------------------\n");
-    if (cube->attribut->no)
-        printf("NO: %s\n", cube->attribut->no);
-    if (cube->attribut->so)
-        printf("SO: %s\n", cube->attribut->so);
-    if (cube->attribut->we)
-        printf("WE: %s\n", cube->attribut->we);
-    if (cube->attribut->ea)
-        printf("EA: %s\n", cube->attribut->ea);
-    if (cube->attribut->s)
-        printf("S: %s\n", cube->attribut->s);
-    if (cube->attribut->f)
-        printf("F: %s\n", cube->attribut->f);
-    if (cube->attribut->c)
-        printf("C: %s\n", cube->attribut->c);
-    printf("R= %d, G= %d, B= %d\n", cube->attribut->color->red, cube->attribut->color->green, cube->attribut->color->blue);
+	if (keycode == 65307)
+	{
+		ft_putstr_fd("exiting... \n", 1);
+        exit(0);
+	}
+}
+int	handle_keyboard(int keycode, t_cube3D *cube)
+{
+    handle_exit(keycode, cube);
 }
 
 int ft_mlx_init(t_cube3D *cube)
@@ -155,6 +177,7 @@ int ft_mlx_init(t_cube3D *cube)
         return (1);
     cube->mlx->win = mlx_new_window(cube->mlx->mlx, 500, 500, "my cube 3D");
     map_draw(cube);
+    mlx_key_hook(cube->mlx->win, handle_keyboard, &cube);
     mlx_loop(cube->mlx->mlx);
 }
 
@@ -166,8 +189,6 @@ int main(int ac, char **av)
     if (!cube)
         return (1);
     map_in_it(cube, av);
-    print_map(cube);
     ft_mlx_init(cube);
-    // Free allocated memory here if necessary
     return (0);
 }
