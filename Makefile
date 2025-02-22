@@ -1,5 +1,5 @@
 CC		= cc
-SRC		= get_next_line.c get_next_line_utils.c main.c utils.c map_draw.c
+SRC		= get_next_line.c get_next_line_utils.c main.c utils.c map_draw.c map_utils.c
 NAME	= Cube_3D
 CFLAGS	= #-Wall -Wextra -Werror
 CLIBS	= -Lmlx_linux -lmlx_Linux -Imlx_linux -lXext -lX11 -lm -lz

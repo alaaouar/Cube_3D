@@ -26,6 +26,7 @@ typedef struct s_color
 
 typedef struct attribut
 {
+    char **map;
     char *no;
     char *so;
     char *we;
@@ -52,7 +53,7 @@ typedef struct s_cube3D
 {
     int width;
     int height;
-    char **map;
+    char **file;
     char *name;
     t_attribut *attribut;
     t_mlx *mlx;
@@ -66,5 +67,6 @@ int     colors(char *thec, t_cube3D *cube, char c);
 void    caculate_map(t_cube3D *cube);
 void    fill_the_map(t_cube3D *cube);
 void    map_attributes(t_cube3D *cube);
+void get_the_map_only(t_cube3D *cube);
 
 #endif
